@@ -31,5 +31,8 @@ Pybo는 Flask로 만든 실전형 Q&A 웹 애플리케이션입니다.
 - Jinja2 Template
 - HTML/CSS (custom)
 
+---
 
-![image](https://github.com/user-attachments/assets/5e1db181-9966-4ad0-a4dc-2b7950be16fa)
+## 💬 Pybo 사용 화면
+<img src="https://github.com/user-attachments/assets/5e1db181-9966-4ad0-a4dc-2b7950be16fa" width="600" alt="프로젝트 대표 이미지1" />
+<img src="https://github.com/user-attachments/assets/1f6c6e80-ec7f-4eea-acbd-08fdcadeee00" width="600" alt="프로젝트 대표 이미지2" />
