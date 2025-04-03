@@ -30,3 +30,6 @@ Pybo는 Flask로 만든 실전형 Q&A 웹 애플리케이션입니다.
 - SQLAlchemy
 - Jinja2 Template
 - HTML/CSS (custom)
+
+
+![image](https://github.com/user-attachments/assets/5e1db181-9966-4ad0-a4dc-2b7950be16fa)
