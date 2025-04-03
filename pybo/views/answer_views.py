@@ -52,16 +52,17 @@ def modify(answer_id):
 @bp.route('/delete/<int:answer_id>/')
 @login_required
 def delete(answer_id):
+    print("삭제 라우트 도착함!")
     answer = Answer.query.get_or_404(answer_id)
 
     if g.user.id != answer.user_id:
         flash('삭제 권한이 없습니다.')
         return redirect(url_for('question.detail', question_id=answer.question.id))
-
+    question_id = answer.question.id
     db.session.delete(answer)
     db.session.commit()
     flash('답변이 삭제되었습니다.')
-    return redirect(url_for('question.detail', question_id=answer.question.id))
+    return redirect(url_for('question.detail', question_id=question_id))
 
 @bp.route('/vote/<int:answer_id>/')
 @login_required

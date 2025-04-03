@@ -65,7 +65,7 @@
 					  <div style="text-align: right; margin-top: 5px;">
 						<a href="{{ url_for('answer.modify', answer_id=answer.id) }}">🖋</a>
 						<span style= "margin-left:6px;"></span>
-						<a href="{{ url_for('answer.delete', answer_id=answer.id) }}
+						<a href="{{ url_for('answer.delete', answer_id=answer.id) }}"
 						   onclick="return confirm('답변을 삭제하시겠습니까?');">🗑</a>
 					  </div>
 					{% endif %}
