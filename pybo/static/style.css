@@ -67,6 +67,7 @@ li {
 /* 텍스트 입력 */
 textarea {
     width: 95%;
+	height: 100px;
     padding: 15px;
     font-size: 16px;
     border-radius: 8px;
