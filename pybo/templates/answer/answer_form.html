@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>답변 수정</h2>
+<form method="post">
+    <textarea name="content" rows="10" style="width:100%;">{{ answer.content }}</textarea>
+    <div style="margin-top: 15px;">
+        <input type="submit" value="수정 완료">
+    </div>
+</form>
+{% endblock %}

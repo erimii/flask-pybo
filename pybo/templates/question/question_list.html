@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="top-action-bar">
+  <div class="left">
+    <a href="{{ url_for('question.create') }}" class="btn">🖋 질문 등록</a>
+  </div>
+
+  <form method="get" action="{{ url_for('question._list') }}" class="right search-form-inline">
+    <input type="text" name="kw" value="{{ kw }}" placeholder="검색어를 입력하세요">
+    <button type="submit" class="btn btn-search">검색</button>
+  </form>
+</div>
+
+
+    {% if question_list %}
+	<table class="question-table">
+	  <thead>
+		<tr>
+		  <th>번호</th>
+		  <th style="width:45%">제목</th>
+		  <th>작성자</th>
+		  <th>작성일시</th>
+		</tr>
+	  </thead>
+	  <tbody>
+		{% for question in pagination.items %}
+		<tr>
+		  <td>#{{ question.id }}</td>
+		  <td>
+			<a href="{{ url_for('question.detail', question_id=question.id) }}">
+			  {{ question.subject }}
+			</a>
+			<span class="answer-count">[{{ question.answer_set|length }}]</span>
+		  </td>
+		  <td>{{ question.user.username }}</td>
+		  <td class="date-cell">{{ question.create_date.strftime('%Y-%m-%d %H:%M') }}</td>
+		</tr>
+		{% endfor %}
+	  </tbody>
+	</table>
+    {% else %}
+        <p>질문이 없습니다.</p>
+    {% endif %}
+	<div class="pagination">
+	  {% if pagination.has_prev %}
+		<a href="{{ url_for('question._list', page=pagination.prev_num, kw=kw) }}">« 이전</a>
+	  {% endif %}
+
+	  {% for p in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+		{% if p %}
+		  {% if p == pagination.page %}
+			<strong>{{ p }}</strong>
+		  {% else %}
+			<a href="{{ url_for('question._list', page=p) }}">{{ p }}</a>
+		  {% endif %}
+		{% else %}
+		  …
+		{% endif %}
+	  {% endfor %}
+
+	  {% if pagination.has_next %}
+		<a href="{{ url_for('question._list', page=pagination.next_num, kw=kw) }}">다음 »</a>
+	  {% endif %}
+	</div>
+
+{% endblock %}
+

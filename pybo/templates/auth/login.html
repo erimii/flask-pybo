@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}로그인{% endblock %}
+
+{% block content %}
+<h2>로그인</h2>
+<form method="post">
+    {{ form.hidden_tag() }}
+
+    <div>
+        {{ form.username.label }}<br>
+        {{ form.username(class="form-control") }}
+        {% for error in form.username.errors %}
+            <div class="error">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div>
+        {{ form.password.label }}<br>
+        {{ form.password(class="form-control") }}
+        {% for error in form.password.errors %}
+            <div class="error">{{ error }}</div>
+        {% endfor %}
+    </div>
+
+    <div style="margin-top: 15px;">
+        <input type="submit" value="로그인">
+    </div>
+</form>
+{% endblock %}

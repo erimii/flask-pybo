@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>질문 등록</h1>
+    <form method="post">
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.subject.label }}<br>
+            {{ form.subject(class="form-control") }}
+            {% if form.subject.errors %}
+                <ul>
+                {% for error in form.subject.errors %}
+                    <li style="color: red;">{{ error }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div style="margin-top: 10px;">
+            {{ form.content.label }}<br>
+            {{ form.content(rows=10) }}
+            {% if form.content.errors %}
+                <ul>
+                {% for error in form.content.errors %}
+                    <li style="color: red;">{{ error }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div style="margin-top: 15px;">
+            <input type="submit" value="질문 등록">
+        </div>
+    </form>
+{% endblock %}

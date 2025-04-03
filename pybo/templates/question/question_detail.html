@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block content %}
+	<!-- flash 오류 -->
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-danger" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+        <!-- 질문 제목 -->
+        <h1>{{ question.subject }}</h1>
+
+        <!-- 질문 본문 -->
+        <div class="question-content">
+            {{ question.content }}
+        </div>
+
+        <!-- 질문 작성자, 작성일 (오른쪽 정렬) -->
+		<div class="answer-meta">
+		  <span class="answer-author">작성자: {{ question.user.username }}</span><br>
+		  <span class="answer-date">작성일시:{{ question.create_date.strftime('%Y-%m-%d %H:%M') }}</span><br>
+		  {% if question.modify_date %}
+		  <span class="answer-date" style="text-align: center; font-size: 0.8em; color: #999;">(수정됨: {{ question.modify_date.strftime('%Y-%m-%d %H:%M') }})</span>
+		  {% endif %}
+		</div>
+		
+		{% if g.user and g.user.id == question.user_id %}
+		  <div style="text-align: right; margin-top: 10px;">
+			<a href="{{ url_for('question.modify', question_id=question.id) }}" class="btn">🖋수정</a>
+			<a href="{{ url_for('question.delete', question_id=question.id) }}" class="btn" onclick="return confirm('정말 삭제하시겠습니까?');">🗑삭제</a>
+		  </div>
+		{% endif %}
+		<div style="text-align: right; margin-top: 10px;">
+		{% if g.user in question.voter %}
+			<a href="{{ url_for('question.vote', question_id=question.id) }}">
+				👍 취소 ({{ question.voter|length }})
+			</a> 
+		{% else %}
+			<a href="{{ url_for('question.vote', question_id=question.id) }}">
+				👍 추천 ({{ question.voter|length }})
+			</a>
+		{% endif %}
+		</div>
+
+
+
+        <!-- 답변 개수 -->
+        <h5>{{ question.answer_set|length }}개의 답변이 있습니다.</h5>
+
+        <!-- 답변 목록 -->
+        <ul>
+        {% for answer in question.answer_set %}
+		<a id="answer_{{ answer.id }}"></a>
+            <li>
+                <div class="answer-content">{{ answer.content }}</div>
+				
+				<div class="answer-meta">
+					<span class="answer-author">작성자: {{ answer.user.username }}</span><br>
+					<span class="answer-date">{{ answer.create_date.strftime('%Y-%m-%d %H:%M') }}</span><br>
+					{% if answer.modify_date %}
+						<div style="text-align: center; font-size: 0.8em; color: #999;">
+							(수정됨: {{ answer.modify_date.strftime('%Y-%m-%d %H:%M') }})
+						</div>
+					{% endif %}
+					{% if g.user and g.user.id == answer.user_id %}
+					  <div style="text-align: right; margin-top: 5px;">
+						<a href="{{ url_for('answer.modify', answer_id=answer.id) }}">🖋</a>
+						<span style= "margin-left:6px;"></span>
+						<a href="{{ url_for('answer.delete', answer_id=answer.id) }}
+						   onclick="return confirm('답변을 삭제하시겠습니까?');">🗑</a>
+					  </div>
+					{% endif %}
+{% if g.user in answer.voter %}
+    <a href="{{ url_for('answer.vote', answer_id=answer.id) }}">
+        취소({{ answer.voter|length }})
+    </a>
+{% else %}
+    <a href="{{ url_for('answer.vote', answer_id=answer.id) }}">
+        👍({{ answer.voter|length }})
+    </a>
+{% endif %}
+				</div>
+
+
+            </li>
+        {% endfor %}
+        </ul>
+
+        <!-- 답변 등록 폼 -->
+        <form action="{{ url_for('answer.create', question_id=question.id) }}" method="post">
+            <textarea name="content" id="content" rows="10" placeholder="답변을 입력하세요."></textarea>
+            <input type="submit" value="답변 등록">
+        </form>
+{% endblock %}

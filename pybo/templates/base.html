@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pybo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0;">
+            <h1 style="margin: 0;">
+                <a href="{{ url_for('main.index') }}">📘 Pybo</a>
+            </h1>
+			{% if g.user %}
+				<div class="user-greeting">
+					안녕하세요, <strong>{{ g.user.username }}</strong>님 👋
+				</div>
+			{% endif %}
+            <nav>
+				{% if g.user %}
+					<a href="{{ url_for('auth.logout') }}">로그아웃</a>
+				{% else %}
+					<a href="{{ url_for('auth.login') }}">로그인</a>
+					<a href="{{ url_for('auth.signup') }}">회원가입</a>
+				{% endif %}
+            </nav>
+        </header>
+        <hr style="border: none; height: 2px; background-color: #e2efff;">
+		{% with messages = get_flashed_messages() %}
+		  {% if messages %}
+			<ul class="flashes">
+			  {% for message in messages %}
+				<div class="flash">{{ message }}</div>
+			  {% endfor %}
+			</ul>
+		  {% endif %}
+		{% endwith %}
+
+        {% block content %}
+        {% endblock %}
+        <footer style="margin-top: 40px; padding-top: 10px; border-top: 1px solid #ddd; text-align: center; color: #888; font-size: 0.9em;">
+            © 루비는 세상에서 제일 귀여운 고양이
+        </footer>
+    </div>
+</body>
+</html>
