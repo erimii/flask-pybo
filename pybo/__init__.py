@@ -13,7 +13,7 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 
-from flask import g, session
+from flask import g, session, render_template
 
 naming_convention = {
     "ix": 'ix_%(column_0_label)s',
@@ -29,6 +29,9 @@ migrate = Migrate()
 # 전역 변수로 객체 생성
 db = SQLAlchemy()
 migrate = Migrate()
+
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 def create_app(): # Application Factory
     app = Flask(__name__)
@@ -58,6 +61,9 @@ def create_app(): # Application Factory
             g.user = None
         else:
             g.user = User.query.get(user_id)
+    
+    # 오류페이지
+    app.register_error_handler(404, page_not_found)
     
     return app
 
