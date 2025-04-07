@@ -13,8 +13,6 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 
-import config
-
 from flask import g, session
 
 naming_convention = {
@@ -34,7 +32,7 @@ migrate = Migrate()
 
 def create_app(): # Application Factory
     app = Flask(__name__)
-    app.config.from_object(config)
+    app.config.from_envvar('APP_CONFIG_FILE')
     app.secret_key = 'ddsf-df-df-df'
     
     # ORM
